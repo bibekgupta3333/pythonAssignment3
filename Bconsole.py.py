@@ -17,20 +17,69 @@ format (.csv, .txt, etc).
 Ignore the permissions for now. Anyone who runs the script is allowed to
 access all the features. Develop the app with OOP Approach."""
 import json
-import time
+import os
 
 
-def ITAcademy():
+def ITAcademy(path):
+    """
+    !!!!!!!!!!!! CONSOLE ITACADEMY !!!!!!!!!!!!!!!!!!!
+    course_status number meaning
+    1= 1st installement payed
+    2= 2nd installement payed
+    3= course completed
+    if course completed teacher can update student profile 
+    """
+    if not os.path.exists(path):
+        fa = open(
+            path, 'w')
+        content = {
+            "courses": {
+                "Python": "==========Python==========\nBegginer to Advance\n3 month course\nCourse Subscipition: Rs 20000",
+                "PHP": "==========PHP==========\nBegginer to Advance\n3 month course\nCourse Subscipition: Rs 20000",
+                "CloudComputing": "==========CloudComputing==========\nBegginer to Advance\n3 month course\nCourse Subscipition: Rs 20000",
+                "DataScience": "==========DataScience==========\nBegginer to Advance\n3 month course\nCourse Subscipition: Rs 20000",
+                "FrontEnd": "==========FrontEnd==========\nBegginer to Advance\n3 month course\nCourse Subscipition: Rs 20000"
+            },
+            "student": {
+                "1": {
+                    "name": "Bibek Gupta",
+                    "payment": 10000,
+                    "returned": "",
+                    "course": "Python",
+                    "course_status": 2
+                },
+                "2": {
+                    "name": "Ashish Gupta",
+                    "payment": 10000,
+                    "returned": "",
+                    "course": "DataScience",
+                    "course_status": 1
+                },
+                "3": {
+                    "name": "Bipul Gupta",
+                    "payment": 10000,
+                    "returned": "",
+                    "course": "CloudComputing",
+                    "course_status": 2
+                }
+            }
+        }
+
+        json.dump(content, fa, indent=4)
+        fa.close()
     i = 1
     while (i != 0):
         print('================================ Welcome to IT Academy ================================')
         print(
             '1.Course Enquiry\n2.Student Payment related information\n3.Enrolled into course\n4.Update Student info\n5.Delete Student info\n6.Money Return on course completion\n0.Exit Application')
-        num = int(input('Press the above number as your be full: '))
+        num = input('Press the above number as your be full: ')
+        if num == '':
+            num = 1
+        num = int(num)
         if (num == 1):
             print('Course Enquiry')
             fo = open(
-                'C:\\Users\\BibekG\\Desktop\\Python_homeWork\\assigment3\\itacademy.json', 'r')
+                path, 'r')
             file_info = json.load(fo).get('courses')
             print(file_info['Python'])
             print(file_info['PHP'])
@@ -47,7 +96,7 @@ def ITAcademy():
                 '================================ Student Payment related information ================================')
 
             fo = open(
-                'C:\\Users\\BibekG\\Desktop\\Python_homeWork\\assigment3\\itacademy.json', 'r')
+                path, 'r')
             std_id = input('please enter your student id: ')
             file_info = json.load(fo).get('student')
             if std_id in list(file_info.keys()):
@@ -70,7 +119,7 @@ def ITAcademy():
             print(course.get(course_num))
             if course.get(course_num):
                 fo = open(
-                    'C:\\Users\\BibekG\\Desktop\\Python_homeWork\\assigment3\\itacademy.json', 'r')
+                    path, 'r')
 
                 file = json.load(fo)
                 # print(file)
@@ -91,7 +140,7 @@ def ITAcademy():
                     print(std_file)
                     file['student'] = std_file
                     fa = open(
-                        'C:\\Users\\BibekG\\Desktop\\Python_homeWork\\assigment3\\itacademy.json', 'w')
+                        path, 'w')
                     json.dump(file, fa, indent=4)
                     fa.close()
                     fo.close()
@@ -109,7 +158,7 @@ def ITAcademy():
                 '================================ Update Student information ================================')
 
             fo = open(
-                'C:\\Users\\BibekG\\Desktop\\Python_homeWork\\assigment3\\itacademy.json', 'r')
+                path, 'r')
             file = json.load(fo)
             file_info = file.get('student')
             print('All student_id', list(file_info.keys()))
@@ -145,7 +194,7 @@ def ITAcademy():
                 file['student'] = file_info
                 print(file)
                 fa = open(
-                    'C:\\Users\\BibekG\\Desktop\\Python_homeWork\\assigment3\\itacademy.json', 'w')
+                    path, 'w')
                 json.dump(file, fa, indent=4)
                 fo.close()
                 fa.close()
@@ -163,7 +212,7 @@ def ITAcademy():
                 '================================ Delete Student information ================================')
 
             fo = open(
-                'C:\\Users\\BibekG\\Desktop\\Python_homeWork\\assigment3\\itacademy.json', 'r')
+                path, 'r')
             file = json.load(fo)
             file_info = file.get('student')
             print('All student_id', list(file_info.keys()))
@@ -178,7 +227,7 @@ def ITAcademy():
                     file['student'] = file_info
                     print(file)
                     fa = open(
-                        'C:\\Users\\BibekG\\Desktop\\Python_homeWork\\assigment3\\itacademy.json', 'w')
+                        path, 'w')
                     json.dump(file, fa, indent=4)
                     fo.close()
                     fa.close()
@@ -201,7 +250,7 @@ def ITAcademy():
                 '================================ Reward on completion information ================================')
 
             fo = open(
-                'C:\\Users\\BibekG\\Desktop\\Python_homeWork\\assigment3\\itacademy.json', 'r')
+                path, 'r')
             file = json.load(fo)
             file_info = file.get('student')
             print('All student_id', list(file_info.keys()))
@@ -220,7 +269,7 @@ def ITAcademy():
                     file['student'] = file_info
                     print(file)
                     fa = open(
-                        'C:\\Users\\BibekG\\Desktop\\Python_homeWork\\assigment3\\itacademy.json', 'w')
+                        path, 'w')
                     json.dump(file, fa, indent=4)
                     fo.close()
                     fa.close()
@@ -249,4 +298,6 @@ def ITAcademy():
 
 
 if __name__ == "__main__":
-    ITAcademy()
+    path = os.path.join(os.getcwd(), 'database.json')
+    print('Your database is create on following location: ', path)
+    ITAcademy(path)
